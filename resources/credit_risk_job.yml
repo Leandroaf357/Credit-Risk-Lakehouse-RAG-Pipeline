@@ -1,0 +1,32 @@
+resources:
+  jobs:
+    credit_risk_job:
+      name: "Credit Risk Medallion Pipeline"
+      tasks:
+        - task_key: "00_setup"
+          notebook_task:
+            notebook_path: "../src/setup/00_setup_infraconfig.sql.ipynb"
+            
+        - task_key: "01_bronze_ingestion"
+          depends_on:
+            - task_key: "00_setup"
+          notebook_task:
+            notebook_path: "../src/bronze/01_ingestao_bronze.py.ipynb"
+            
+        - task_key: "02_silver_cleaning"
+          depends_on:
+            - task_key: "01_bronze_ingestion"
+          notebook_task:
+            notebook_path: "../src/silver/02_limpeza_silver.py.ipynb"
+            
+        - task_key: "03_gold_aggregation"
+          depends_on:
+            - task_key: "02_silver_cleaning"
+          notebook_task:
+            notebook_path: "../src/gold/03_agregacao_gold.py.ipynb"
+
+        - task_key: "04_gold_rag_text"
+          depends_on:
+            - task_key: "03_gold_aggregation"
+          notebook_task:
+            notebook_path: "../src/gold/04_gold_rag_text.py.ipynb"

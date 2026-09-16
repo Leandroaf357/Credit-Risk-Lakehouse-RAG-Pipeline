@@ -1,0 +1,12 @@
+bundle:
+  name: credit_risk_pipeline
+
+workspace:
+  host: https://dbc-63ce2688-1ea4.cloud.databricks.com
+
+include:
+  - resources/*.yml
+
+targets:
+  development:
+    default: true
